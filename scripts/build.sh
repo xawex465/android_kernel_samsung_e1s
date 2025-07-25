@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-KERNEL_DEFCONFIG=gki_defconfig
+KERNEL_DEFCONFIG=e1s_defconfig
 CLANG_VERSION=clang-r547379
 
 OUT_DIR=out
