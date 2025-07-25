@@ -145,7 +145,7 @@ $(obj)/config_data.gz: $(obj)/config_data FORCE
 
 filechk_cat = cat $<
 
-$(obj)/config_data: arch/arm64/configs/e1s_defconfig
+$(obj)/config_data: arch/arm64/configs/e1s_defconfig FORCE
 	$(call filechk,cat)
 
 $(obj)/kheaders.o: $(obj)/kheaders_data.tar.xz
