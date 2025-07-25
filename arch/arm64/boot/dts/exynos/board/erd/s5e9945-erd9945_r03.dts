@@ -1,0 +1,259 @@
+/*
+ * SAMSUNG S5E9945 board device tree source
+ *
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "s5e9945-erd9945_common.dtsi"
+#include "panel/samsung-emulation-video-panel.dtsi"
+#include "panel/samsung-s6e3had-1440-3200-command-panel.dtsi"
+#include "panel/samsung-s6e3had-1080-2400-command-panel.dtsi"
+#include "panel/samsung-s6e3had-720-1600-command-panel-sec.dtsi"
+
+#define BOARD_ID	0x0
+#define BOARD_REV	0x3
+
+/ {
+	compatible = "samsung,s5e9945", "samsung,ERD9945";
+	board_id = <BOARD_ID>;
+	board_rev = <BOARD_REV>;
+
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			#address-cells = <2>;
+			#size-cells = <1>;
+
+			model = "Samsung ERD9945 board based on S5E9945";
+		}; /* end of __overlay__ */
+	}; /* end of fragment */
+}; /* end of root */
+
+&serial_0 {
+	status = "okay";
+};
+
+&drmdsim_0 {
+	drmpanel {
+		default-panel = "s6e3had_1440_3200_cmd";
+	};
+};
+
+/* Do not pass gpa3-6 irq to kernel. Ony ACPM can receive IRQ, not kernel */
+&pinctrl_0 {
+	interrupts = <GIC_SPI EXT_INTA0_OUT0 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT1 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT2 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT3 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT4 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT5 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT6 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA0_OUT7 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT0 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT1 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT2 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT3 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT4 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT5 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT6 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA1_OUT7 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT0 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT1 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT2 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT3 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT4 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT5 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT6 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA2_OUT7 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT0 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT1 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT2 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT3 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT4 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT5 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI INTREQ__DUMMY  IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT7 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA4_OUT0 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA4_OUT1 IRQ_TYPE_LEVEL_HIGH>;
+};
+
+&gpa3 {
+	interrupts = <GIC_SPI EXT_INTA3_OUT0 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI EXT_INTA3_OUT1 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT2 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI EXT_INTA3_OUT3 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI EXT_INTA3_OUT4 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI EXT_INTA3_OUT5 IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI INTREQ__DUMMY  IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI EXT_INTA3_OUT7 IRQ_TYPE_LEVEL_HIGH>;
+};
+
+&pinctrl_5 {
+	ddi_rst_sec: ddi-rst-sec {
+		samsung,pins = "gpc4-1";
+		//samsung,pin-con-pdn = <3>;	/* not need for alive gpio */
+		//samsung,pin-pud-pdn = <0>;	/* not need for alive gpio */
+	};
+};
+
+&pinctrl_6 {
+	decon_1_te_on: decon_1_te_on {
+		samsung,pins = "gpg2-1";
+		samsung,pin-function = <0xf>;
+	};
+
+	decon_1_te_off: decon_1_te_off {
+		samsung,pins = "gpg2-1";
+		samsung,pin-function = <0>;
+	};
+};
+
+&drmdpp17 {
+	status = "okay";
+};
+
+&drmdecon0 {
+	decon,dual-display = <1>;
+	connector = <0x1 0x8>;
+};
+
+&drmdecon1 {
+	reg = <0x0 0x19101000 0xFFFF>,	/* DECON0_MAIN */
+	      <0x0 0x19110000 0xFFFF>,	/* DECON_WIN */
+	      <0x0 0x19120000 0xFFFF>,	/* DECON_SUB */
+	      <0x0 0x19140000 0xFFFF>,	/* DECON0_WINCON */
+	      <0x0 0x19959000 0x1000>,	/* SRAMC0_D1 - DPUF0 */
+	      <0x0 0x19B59000 0x1000>,	/* SRAMC1_D1 - DPUF1 */
+	      <0x0 0x19B0E000 0x1000>,  /* DQE EDMA*/
+	      <0x0 0x19180000 0xFFFF>;  /* DQE */
+
+	reg-names = "main", "win", "sub", "wincon", "sramc_d", "sramc1_d", "edma", "dqe";
+
+	interrupts = <GIC_SPI INTREQ__DPUB_DECON1_FRAME_START
+			IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI INTREQ__DPUB_DECON1_FRAME_DONE
+			IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI INTREQ__DPUB_DECON1_EXTRA
+			IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI INTREQ__DPUF1_DMA_CGCTRL1
+			IRQ_TYPE_LEVEL_HIGH>,
+		     <GIC_SPI INTREQ__DPUF0_SRAMCON_D1
+			IRQ_TYPE_LEVEL_HIGH>,
+			 <GIC_SPI INTREQ__DPUF1_SRAMCON_D1
+			IRQ_TYPE_LEVEL_HIGH>;
+	interrupt-names = "frame_start", "frame_done", "extra",
+			  "edma", "sramc_d", "sramc1_d";
+
+	decon,dual-display = <1>;
+	hibernation = <1>;
+	rcd = <&drmdpp17>;
+	partial-update;
+
+	/* pinctrl */
+	pinctrl-names = "hw_te_on", "hw_te_off";
+	pinctrl-0 = <&decon_1_te_on>;
+	pinctrl-1 = <&decon_1_te_off>;
+
+	trig_mode = <0>;	/* 0: hw trigger, 1: sw trigger */
+	out_type = <0x2>;	/* BIT1: DSI1 */
+	te_from = <1>;
+	connector = <0x2>;
+
+	/* EINT for TE */
+	gpios = <&gpg2 1 0xf>;
+
+	/* unit that is located at the very end of the decon
+	 *      DQE=0
+	 *      AIQE=1
+	 */
+	terminal-unit = <0>;
+
+	#address-cells = <2>;
+	#size-cells = <1>;
+	ranges;
+
+	/* sw te pending register */
+	te_eint {
+		/* NWEINT_GPG2_PEND */
+		reg = <0x0 0x11030A10 0x4>;
+	};
+};
+
+&drmdecon3 {
+	op_mode = <1>;
+	trig_mode = <1>;        /* 0: hw trigger, 1: sw trigger */
+	out_type = <0x100>;/* BIT0:DSI0, BIT1:DSI1, BIT4:DP0, BIT5:DP1 BIT8: WB */
+
+	connector = <0x8>;
+};
+
+&drmdsim_0 {
+	drmpanel {
+		default-panel = "s6e3had_1080_2400_cmd";
+	};
+};
+
+&drmdsim_1 {
+	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	drmpanel {
+		   compatible = "samsung,command-ctrl";
+		   /* reset, power */
+		   default-panel = "s6e3had_720_1600_cmd_sec";
+		   reset-gpios = <&gpc4 1 GPIO_ACTIVE_HIGH>;
+		   reg = <1>;
+
+		   pinctrl-names = "default";
+		   pinctrl-0 = <&ddi_rst_sec>;
+	};
+};
+
+/* second display pmic */
+&hsi2c_1 {
+	status = "okay";
+};
+
+&pinctrl_0 {
+	touch1_irq: touch1-irq {
+		samsung,pins = "gpa3-3";
+		samsung,pin-function = <0xf>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <3>;
+	};
+
+	touch1_input: touch1-input {
+		samsung,pins = "gpa3-3";
+		samsung,pin-function = <0>;
+		samsung,pin-pud = <1>;
+	};
+};
+
+&hsi2c_38 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	samsung,reset-before-trans;
+	touchscreen@48 {
+		compatible = "sec,sec_ts";
+		reg = <0x48>;
+		pinctrl-names = "on_state", "off_state";
+		pinctrl-0 = <&touch1_irq>;
+		pinctrl-1 = <&touch1_input>;
+		pressure-sensor = "Y";
+		sec,irq_gpio = <&gpa3 3 0>;
+		sec,irq_type = <8200>;
+		sec,max_coords = <4095 4095>;
+		sec,mis_cal_check = <1>;
+		dvdd-supply = <&dp2_ldo2>;// VDD_TSP1_1P8
+		avdd-supply = <&dp2_ldo3>;// VDD_TSP1_3P0
+		sec,always_lpmode = <1>;
+		sec,project_name = "root";
+	};
+};

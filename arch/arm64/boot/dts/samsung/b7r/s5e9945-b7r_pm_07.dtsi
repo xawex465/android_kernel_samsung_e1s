@@ -1,0 +1,88 @@
+/*
+ * SAMSUNG S5E9945 Display, Camera PMIC device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *             http://www.samsung.com
+ *
+ * EXYNOS based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "../s5e9945-sec_pm_common.dtsi"
+#include "s5e9945-b7r_pm_thermistor_07.dtsi"
+
+&hsi2c_36 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	s2mpb03_pmic@56 {
+		compatible = "samsung,s2mpb03pmic";
+		reg = <0x56>;
+
+		s2mpb03,wakeup;
+
+		regulators {
+			__ldo1_reg: s2mpb03-ldo1 {
+				regulator-name = "VDD_WIDECAM_PHY_0P92";
+				regulator-min-microvolt = <925000>;
+				regulator-max-microvolt = <925000>;
+			};
+
+			__ldo2_reg: s2mpb03-ldo2 {
+				regulator-name = "VDD_VTCAM_1P05";
+				regulator-min-microvolt = <1050000>;
+				regulator-max-microvolt = <1050000>;
+			};
+
+			__ldo3_reg: s2mpb03-ldo3 {
+				regulator-name = "VDD_WIDECAM_IO_1P8";
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+			};
+
+			__ldo4_reg: s2mpb03-ldo4 {
+				regulator-name = "S2MPB03_LD04";
+				regulator-min-microvolt = <700000>;
+				regulator-max-microvolt = <1025000>;
+			};
+
+			__ldo5_reg: s2mpb03-ldo5 {
+				regulator-name = "VDD_UWCAM_A2P2";
+				regulator-min-microvolt = <2200000>;
+				regulator-max-microvolt = <2200000>;
+			};
+
+			__ldo6_reg: s2mpb03-ldo6 {
+				regulator-name = "VDD_WIDECAM_A2P2";
+				regulator-min-microvolt = <2200000>;
+				regulator-max-microvolt = <2200000>;
+			};
+
+			__ldo7_reg: s2mpb03-ldo7 {
+				regulator-name = "VDD_WIDECAM_OIS_3P3";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+			};
+		};
+	};
+};
+
+&pinctrl_7 {
+	if_pmic_ocp_warn: if-pmic-ocp-warn {
+		samsung,pins = "gpb1-2";
+		samsung,pin-function = <0>;
+		samsung,pin-pud = <0>;
+		samsung,pin-con-pdn = <2>;
+		samsung,pin-pud-pdn = <0>;
+	};
+};
+
+&sec_pm_smpl_warn {
+	pinctrl-names = "default";
+	pinctrl-0 = <&if_pmic_ocp_warn>;
+	if-pmic-ocp-warn-gpio = <&gpb1 2 0>;
+};

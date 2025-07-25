@@ -1,0 +1,31 @@
+/*
+ * Samsung Exynos SoC series Pablo driver
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&hsi2c_35 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	gpios = <&gpm0 0 0 &gpm0 1 0>;
+	clock-frequency = <400000>;
+
+	aw36518@63 {
+		compatible = "aw36518";
+		reg = <0x63>;
+		torch_level_1_cur = <50>;
+		torch_level_2_cur = <75>;
+		torch_level_3_cur = <125>;
+		torch_level_4_cur = <175>;
+		torch_level_5_cur = <225>;
+		pre_flash_cur = <225>;
+		main_flash_cur = <1300>;
+		video_torch_cur = <60>;
+		status = "okay";
+	};
+};
